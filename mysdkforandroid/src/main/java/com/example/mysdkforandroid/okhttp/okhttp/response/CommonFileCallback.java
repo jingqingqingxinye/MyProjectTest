@@ -1,9 +1,9 @@
-package com.example.mysdkforandroid.okhttp.response;
+package com.example.mysdkforandroid.okhttp.okhttp.response;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import com.example.mysdkforandroid.okhttp.exception.OkHttpException;
+import com.example.mysdkforandroid.okhttp.okhttp.exception.OkHttpException;
 import com.example.mysdkforandroid.okhttp.listener.DisposeDataHandle;
 import com.example.mysdkforandroid.okhttp.listener.DisposeDownloadListener;
 import java.io.File;

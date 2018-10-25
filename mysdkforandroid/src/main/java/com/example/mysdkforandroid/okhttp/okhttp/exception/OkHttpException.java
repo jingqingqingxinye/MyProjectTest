@@ -1,13 +1,10 @@
-package com.example.mysdkforandroid.okhttp.exception;
-
-
+package com.example.mysdkforandroid.okhttp.okhttp.exception;
 
 /**
- * Created by jing on 2018/10/18.
+ * Created by jing on 2018/10/25.
  */
 
 public class OkHttpException extends Exception {
-
   private static final long serialVersionUID = 1L;
 
   /**
