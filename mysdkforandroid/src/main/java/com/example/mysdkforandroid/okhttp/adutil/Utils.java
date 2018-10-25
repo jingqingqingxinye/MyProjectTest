@@ -7,8 +7,10 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import com.example.mysdkforandroid.okhttp.constant.SDKConstant;
@@ -49,7 +51,7 @@ public class Utils {
       if ((rect.top > 0) && (rect.left < dispalyWidth)) {
         double areaVisable = rect.width() * rect.height();
         double areaTotal = pView.getWidth() * pView.getHeight();
-        return (int) ((areaVisable / areaTotal) / 100);
+        return (int) ((areaVisable / areaTotal) * 100);
       } else {
         return -1;
       }
@@ -96,4 +98,46 @@ public class Utils {
     }
     return false;
   }
+
+  public static boolean containString(String source, String destation) {
+    if (source.equals("") || destation.equals("")) {
+      return false;
+    }
+    if (source.contains(destation)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * 获取view的屏幕属性
+   *
+   * @return
+   */
+  public static final String VIEW_INFO_EXTRA = "view_into_extra";
+  public static final String PROPNAME_SCREENLOCATION_LEFT = "propname_sreenlocation_left";
+  public static final String PROPNAME_SCREENLOCATION_TOP = "propname_sreenlocation_top";
+  public static final String PROPNAME_WIDTH = "propname_width";
+  public static final String PROPNAME_HEIGHT = "propname_height";
+
+  public static Bundle getViewProperty(View view) {
+    Bundle bundle = new Bundle();
+    int[] screenLocation = new int[2];
+    view.getLocationOnScreen(screenLocation);//获取view在整个屏幕中的位置
+    bundle.putInt(PROPNAME_SCREENLOCATION_LEFT, screenLocation[0]);
+    bundle.putInt(PROPNAME_SCREENLOCATION_TOP, screenLocation[1]);
+    bundle.putInt(PROPNAME_WIDTH, view.getWidth());
+    bundle.putInt(PROPNAME_HEIGHT, view.getHeight());
+
+    Log.e("Utils", "Left: "
+        + screenLocation[0]
+        + " Top: "
+        + screenLocation[1]
+        + " Width: "
+        + view.getWidth()
+        + " Height: "
+        + view.getHeight());
+    return bundle;
+  }
+
 }

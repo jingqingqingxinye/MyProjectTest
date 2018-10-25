@@ -1,10 +1,9 @@
 package com.example.mysdkforandroid.okhttp;
 
-import com.example.mysdkforandroid.okhttp.https.HttpsUtils;
+import com.example.mysdkforandroid.okhttp.okhttp.https.HttpsUtils;
 import com.example.mysdkforandroid.okhttp.listener.DisposeDataHandle;
-import com.example.mysdkforandroid.okhttp.listener.DisposeDataListener;
-import com.example.mysdkforandroid.okhttp.response.CommonFileCallback;
-import com.example.mysdkforandroid.okhttp.response.CommonJsonCallback;
+import com.example.mysdkforandroid.okhttp.okhttp.response.CommonFileCallback;
+import com.example.mysdkforandroid.okhttp.okhttp.response.CommonJsonCallback;
 import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -66,5 +65,11 @@ public class CommonOkHttpClient {
     Call call = mOkhttpClient.newCall(request);
     call.enqueue(new CommonFileCallback(handle));
     return call;
+  }
+
+  public static Call post(Request request, DisposeDataHandle handle) {
+    Call call = mOkhttpClient.newCall(request);
+    call.enqueue(new CommonJsonCallback(handle));
+    return  call;
   }
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.jing.myprojectfortest.Constant;
 import com.example.jing.myprojectfortest.R;
 import com.example.jing.myprojectfortest.activity.PhotoViewActivity;
+import com.example.jing.myprojectfortest.activity.TestActivity;
 import com.example.jing.myprojectfortest.adpater.CourseAdapter;
 import com.example.jing.myprojectfortest.contract.HomeContract;
 import com.example.jing.myprojectfortest.module.recommend.BaseRecommendModel;
@@ -118,6 +119,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,
         } else {
           requestPermission(Constant.HARDWEAR_CAMERA_CODE, Constant.HARDWEAR_CAMERA_PERMISSION);
         }
+      case R.id.category_view:
+        startActivity(new Intent(getActivity(), TestActivity.class));
+        break;
       default:
         break;
     }

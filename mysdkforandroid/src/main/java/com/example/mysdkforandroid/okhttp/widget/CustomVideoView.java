@@ -95,6 +95,9 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         case TIME_MSG:
           if (isPlaying()) {
             //还可以在这里更新progressbar
+            if (listener == null) {
+              return;
+            }
             listener.onBufferUpdate(getCurrentPosition());
             sendEmptyMessageDelayed(TIME_MSG, TIME_INVAL);
           }
@@ -269,6 +272,8 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         //满足自动播放条件，则直接播放
         if (Utils.canAutoPlay(getContext(), AdParameters.getCurrentSetting()) &&
         Utils.getVisiblePersent(mParentContainer) > SDKConstant.VIDEO_SCREEN_PERCENT) {
+          setCurrentPlayState(STATE_PAUSING);
+          resume();
         } else {
           setCurrentPlayState(STATE_PAUSING);
           pause();
@@ -327,7 +332,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
     } else if (v == this.mFullBtn) {
       this.listener.onClickFullScreenBtn();
     } else if (v == mVideoView) {
-      this.listener.onCLickVideo();
+      this.listener.onClickVideo();
     }
   }
 
@@ -642,11 +647,11 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
    */
   public interface ADVideoPlayerListener {
 
-    void onBufferUpdate(int time);
+    void onBufferUpdate(int time);//视频播放器播放到了几秒
 
-    void onClickFullScreenBtn();
+    void onClickFullScreenBtn();//跳转到全屏播放的视频监听
 
-    void onCLickVideo();
+    void onClickVideo();
 
     void onClickBackBtn();
 

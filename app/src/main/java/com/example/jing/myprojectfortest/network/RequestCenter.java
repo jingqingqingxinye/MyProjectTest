@@ -7,8 +7,8 @@ import com.example.mysdkforandroid.okhttp.CommonOkHttpClient;
 import com.example.mysdkforandroid.okhttp.listener.DisposeDataHandle;
 import com.example.mysdkforandroid.okhttp.listener.DisposeDataListener;
 import com.example.mysdkforandroid.okhttp.listener.DisposeDownloadListener;
-import com.example.mysdkforandroid.okhttp.request.CommonRequest;
-import com.example.mysdkforandroid.okhttp.request.RequestParams;
+import com.example.mysdkforandroid.okhttp.okhttp.request.CommonRequest;
+import com.example.mysdkforandroid.okhttp.okhttp.request.RequestParams;
 
 /**
  * Created by jing on 2018/10/19.
