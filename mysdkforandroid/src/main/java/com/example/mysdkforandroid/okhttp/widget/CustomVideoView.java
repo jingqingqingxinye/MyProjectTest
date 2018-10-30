@@ -392,14 +392,14 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
 
   private void showPauseView(boolean show) {
     mFullBtn.setVisibility(show ? View.VISIBLE : View.GONE);
-    mMinPlayBtn.setVisibility(show? View.GONE : View.VISIBLE);
+    mMinPlayBtn.setVisibility(show ? View.GONE : View.VISIBLE);
     mLoadingBar.clearAnimation();
-    mLoadingBar.setVisibility(GONE);
+    mLoadingBar.setVisibility(View.GONE);
     if (!show) {
-      mFrameView.setVisibility(VISIBLE);
+      mFrameView.setVisibility(View.VISIBLE);
       loadFrameImage();
     } else {
-      mFrameView.setVisibility(GONE);
+      mFrameView.setVisibility(View.GONE);
     }
   }
 
@@ -408,7 +408,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
    */
   private void entryResumeState() {
     canPlay = true;
-    setCurrentPlayState(STATE_PAUSING);
+    setCurrentPlayState(STATE_PLAYING);
     setIsRealPause(false);
     setIsComplete(false);
   }

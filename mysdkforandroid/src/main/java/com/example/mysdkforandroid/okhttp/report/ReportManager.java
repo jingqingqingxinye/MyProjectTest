@@ -8,6 +8,7 @@ import com.example.mysdkforandroid.okhttp.module.monitor.Monitor;
 import com.example.mysdkforandroid.okhttp.okhttp.request.CommonRequest;
 import com.example.mysdkforandroid.okhttp.okhttp.request.RequestParams;
 import com.example.mysdkforandroid.okhttp.okhttp.response.HttpConstant;
+import com.example.mysdkforandroid.okhttp.okhttp.response.HttpConstant.Params;
 import java.util.ArrayList;
 
 /**
@@ -140,5 +141,28 @@ public class ReportManager {
             CommonRequest.createMonitorRequest(monitor.url, params), handle);
       }
     }
+  }
+
+  public static void sendAdMonitor(boolean isPad, String sid, String ie,
+      String appVersion, Params step, String result) {
+    RequestParams params = new RequestParams();
+    params.put(Params.lvs.getKey(), Params.lvs.getValue());
+    params.put(Params.st.getKey(), Params.st.getValue());
+    params.put(Params.os.getKey(), Params.os.getValue());
+    params.put(Params.p.getKey(), Params.p.getValue());
+    params.put(Params.appid.getKey(), Params.appid.getValue());
+    if (isPad) {
+      params.put(Params.bt_pad.getKey(), Params.bt_pad.getValue());
+    } else {
+      params.put(Params.bt_phone.getKey(), Params.bt_phone.getValue());
+    }
+    params.put(step.getKey(),
+        step.getValue());
+    params.put(HttpConstant.STEP_CD, result);
+    //params.put(HttpConstant.SID, sid);
+    params.put(HttpConstant.IE, ie);
+    params.put(HttpConstant.AVS, appVersion);
+
+    CommonOkHttpClient.get(CommonRequest.createGetRequest(HttpConstant.ATM_MONITOR, params), handle);
   }
 }

@@ -65,6 +65,7 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
     this.mListener = listener;
   }
 
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -87,11 +88,7 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
     mRootView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (mSlotListener != null) {
-          mSlotListener.onClickVideo(mXAdInstance.clickUrl);
-        } else {
           onClickVideo();
-        }
       }
     });
     mRootView.setVisibility(View.INVISIBLE);
@@ -229,7 +226,7 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
       mVideoView.pauseForFullScreen();
     } else {
       if (isFirst) {
-        mVideoView.seekAndPause(mPosition);
+        mVideoView.seekAndResume(mPosition);
       } else {
         mVideoView.resume();
       }

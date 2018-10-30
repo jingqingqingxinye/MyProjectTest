@@ -159,8 +159,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener,
 
         @Override public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
             int totalItemCount) {
-          //TODO
-          //mAdapter.updateAdInScrollView();
+          mAdapter.updateAdInScrollView();
 
         }
       });

@@ -16,6 +16,17 @@ import org.json.JSONObject;
 
 public class ResponseEntityToModule {
 
+  public static Object parseJsonToModule(String jsonContent, Class<?> clazz) {
+    Object moduleObj = null;
+    try {
+      JSONObject jsonObj = new JSONObject(jsonContent);
+      moduleObj = parseJsonObjectToModule(jsonObj, clazz);
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+    return moduleObj;
+  }
+
   public static Object parseJsonObjectToModule(JSONObject jsonObj, Class<?> clazz) {
     Object moduleObj = null;
     try {

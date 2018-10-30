@@ -16,8 +16,12 @@ import com.example.jing.myprojectfortest.Util;
 import com.example.jing.myprojectfortest.activity.PhotoViewActivity;
 import com.example.jing.myprojectfortest.module.recommend.RecommendBodyValue;
 import com.example.jing.myprojectfortest.presenter.BasePresenter;
+import com.example.mysdkforandroid.okhttp.activity.AdBrowserActivity;
 import com.example.mysdkforandroid.okhttp.adutil.ImageLoaderUtil;
 import com.example.mysdkforandroid.okhttp.adutil.Utils;
+import com.example.mysdkforandroid.okhttp.core.AdContextInterface;
+import com.example.mysdkforandroid.okhttp.core.video.VideoAdContext;
+import com.google.gson.Gson;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.ArrayList;
 
@@ -37,7 +41,7 @@ public class CourseAdapter extends BaseAdapter {
   private Context mContext;
   private ArrayList<RecommendBodyValue> mData;
   private ViewHolder mViewHolder;
-  //private VideoAdContext mAdsdkContext;
+  private VideoAdContext mAdsdkContext;
   private ImageLoaderUtil mImageLoder;
 
   public CourseAdapter(Context context, ArrayList<RecommendBodyValue> data) {
@@ -75,9 +79,32 @@ public class CourseAdapter extends BaseAdapter {
     if (convertView == null) {
       switch (type) {
         case VIDEO_TYPE:
+          //显示video卡片
           mViewHolder = new ViewHolder();
-          //TODO
-          //convertView = mInflate.inflate()
+          convertView = mInflate.inflate(R.layout.item_video_layout, parent, false);
+          mViewHolder.mVieoContentLayout = convertView.findViewById(R.id.video_ad_layout);
+          mViewHolder.mLogoView = convertView.findViewById(R.id.item_logo_view);
+          mViewHolder.mTitleView = convertView.findViewById(R.id.item_title_view);
+          mViewHolder.mInfoView = convertView.findViewById(R.id.item_info_view);
+          mViewHolder.mFooterView = convertView.findViewById(R.id.item_footer_view);
+          mViewHolder.mShareView = convertView.findViewById(R.id.item_share_view);
+          //为对应布局创建播放器
+          mAdsdkContext = new VideoAdContext(mViewHolder.mVieoContentLayout, new Gson().toJson(value), null);
+          mAdsdkContext.setAdResultListener(new AdContextInterface() {
+            @Override public void onAdSucess() {
+
+            }
+
+            @Override public void onAdFailed() {
+
+            }
+
+            @Override public void onClickVideo(String url) {
+              Intent intent = new Intent(mContext, AdBrowserActivity.class);
+              intent.putExtra(AdBrowserActivity.KEY_URL, url);
+              mContext.startActivity(intent);
+            }
+          });
           break;
         case CARD_TYPE_ONE:
           mViewHolder = new ViewHolder();
@@ -153,12 +180,29 @@ public class CourseAdapter extends BaseAdapter {
         //为单个ImageView加载远程图片
         mImageLoder.displayImage(mViewHolder.mProductView, value.url.get(0));
         break;
+      case VIDEO_TYPE:
+        mImageLoder.displayImage(mViewHolder.mLogoView, value.logo);
+        mViewHolder.mTitleView.setText(value.title);
+        mViewHolder.mInfoView.setText(value.info.concat("天前"));
+        mViewHolder.mFooterView.setText(value.text);
+        mViewHolder.mShareView.setOnClickListener(new View.OnClickListener() {
+          @Override public void onClick(View v) {
+            //todo
+          }
+        });
+        break;
       default:
         break;
     }
     return convertView;
   }
 
+  //自动播放方法
+  public void updateAdInScrollView() {
+    if (mAdsdkContext != null) {
+      mAdsdkContext.updateAdInScrollView();
+    }
+  }
   private View createImageView(String url) {
     ImageView photoView = new ImageView(mContext);
     LinearLayout.LayoutParams params = new LinearLayout.

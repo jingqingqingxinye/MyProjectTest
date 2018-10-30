@@ -2,12 +2,16 @@ package com.example.mysdkforandroid.okhttp.adutil;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.telecom.TelecomManager;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -140,4 +144,36 @@ public class Utils {
     return bundle;
   }
 
+  public static boolean isPad(Context context) {
+    //如果能打电话那可能是平板或手机，再根据配置判断
+    if (canTelephone(context)) {
+      return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK)
+          >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    } else {
+      return true;
+    }
+  }
+
+  private static boolean canTelephone(Context context) {
+    TelephonyManager telephony =
+        (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+    return telephony.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE ? false : true;
+  }
+
+  /**
+   * 获取对应应用的版本号
+   * @param context
+   * @return
+   */
+  public static String getAppVersion(Context context) {
+    String version = "1.0.0";
+    PackageManager manager = context.getPackageManager();
+    try {
+      PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+      version = info.versionName;
+    } catch (PackageManager.NameNotFoundException e) {
+      e.printStackTrace();
+    }
+    return version;
+  }
 }
